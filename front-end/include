@@ -1,1 +1,77 @@
-include file
+ <style>
+
+  .links{
+    text-decoration:none; 
+    color:#2206da; 
+    font-weight:500;
+    font-size: 20px;
+
+  }
+  .links:hover{
+    text-decoration:underline;
+  }
+  ul{
+    background-color:white;
+    
+    list-style: none;
+    margin: 0;
+    padding: 7px;
+    display: flex;
+    gap: 20px;
+  }
+ </style>
+
+
+{% if request.path == "/products" %}
+  {% set products_url="text-decoration:underline;font-weight:bold;color:green" %}
+{% elif request.path == "/profile" %}
+  {% set profile_url="text-decoration:underline;font-weight:bold;color:green" %}
+
+{% elif request.path == "/products-admin" %}
+  {% set prod_admin_url="text-decoration:underline;font-weight:bold;color:green" %}
+
+{% elif request.path == "/register" %}
+  {% set register_url="text-decoration:underline;font-weight:bold;color:green" %}
+
+{% elif request.path == "/login" %}
+  {% set login_url="text-decoration:underline;font-weight:bold;color:green" %}
+
+{% elif request.path == "/users" %}
+  {% set users_url="text-decoration:underline;font-weight:bold;color:green" %}
+ 
+{% else %}
+  {% set home_url="text-decoration:underline;font-weight:bold;color:green" %}
+{% endif %}
+
+  <nav style="position:absolute; top:20px; left:20px;background-color: blanchedalmonds;">
+      <ul>
+        <li><a style = "{{ home_url }}" href="/" class="links">Home</a></li>
+        <li><a style = "{{ products_url }}"  href="/products" class="links">Products</a></li>
+        {% if 'email' in session %} 
+          {% if "has_product" in session %}
+            {% if session["has_product"] == 1  %}
+              
+              <li><a style = "{{ prod_admin_url }}" href="/products-admin" class="links">Products-admin</a></li>
+              <li><a style = "{{ users_url }}" href="/users" class="links">Users</a></li>
+            {% endif %}
+          {% endif %}
+        
+        <li><a style = "{{ profile_url }}" href="/profile" class="links">Profile</a></li>
+        {% if "id_token" in session %}
+        <li><a href="/log-out" class="links">Logout cloak</a></li>
+        {% else %}
+        <li><a href="/log-outs" class="links">Logout app</a></li>
+        {% endif %}
+        {% else %}
+        <li><a style = "{{ register_url }}" href="/register" class="links">Register</a></li>
+        <li><a style = "{{ login_url }}" href="/log-ins" class="links">Login app</a></li>
+        
+        <li><a style = "{{ login_url }}" href="/log-in" class="links">Login cloak</a></li>
+        
+        {% endif %}
+      </ul>
+      
+      {% if 'email' in session %} 
+        Hello, <a style="text-decoration:none" class="links" href="/profile">{{ session["fname"] }} {{ session["lname"] }} </a><span>{{ session.get("user_level_text") }}</span>
+      {% endif %}
+    </nav>
