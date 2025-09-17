@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% block title %}Landing Page {% endblock %}
+
+{% block head %}<style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      overflow: hidden; /* Non-scrollable */
+      font-family: "Segoe UI", sans-serif;
+    }
+    .hero {
+      height: 100vh;
+      background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)),
+                  url("https://picsum.photos/1920/1080?ecommerce") no-repeat center center;
+      background-size: cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      text-align: center;
+      padding: 0 20px;
+    }
+    .hero-content {
+      max-width: 1100px;
+    }
+    h1 {
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 700;
+    }
+    p.lead {
+      font-size: clamp(1.1rem, 2vw, 1.4rem);
+      margin-bottom: 2rem;
+    }
+    .benefits {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+    .benefit {
+      background: rgba(255,255,255,0.1);
+      border-radius: 1rem;
+      padding: 1.2rem;
+      min-width: 150px;
+      flex: 1;
+      max-width: 220px;
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+    .benefit:hover {
+      transform: translateY(-8px);
+      background: rgba(255,255,255,0.2);
+    }
+    .benefit i {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    .cta-btn {
+      padding: 14px 40px;
+      font-size: 1.2rem;
+      border-radius: 50px;
+      box-shadow: 0px 4px 15px rgba(0,0,0,0.3);
+    }
+  </style>{% endblock %}
+
+{% block content %}
+
+  <section class="hero">
+ {% include "include/menu.html" %}
+    <div class="hero-content">
+        
+      <!-- Headline -->
+      <h1>Simple api website developed using flask</h1>
+      <p class="lead">This website demonstrate how you can separate your frontend from the backend. The backend runs on port 3000 whilst the frontend runs on port 3001</p>
+
+      <!-- Benefits -->
+      <div class="benefits">
+        <div class="benefit">
+          <i class="bi bi-graph-up-arrow text-warning"></i>
+          <h6 class="fw-bold">Boost Your Sales</h6>
+          <small>Access a growing base of ready-to-buy customers.</small>
+        </div>
+        <div class="benefit">
+          <i class="bi bi-globe2 text-info"></i>
+          <h6 class="fw-bold">Expand Globally</h6>
+          <small>Break barriers — reach buyers worldwide with ease.</small>
+        </div>
+        <div class="benefit">
+          <i class="bi bi-credit-card-fill text-success"></i>
+          <h6 class="fw-bold">Secure Payments</h6>
+          <small>Get paid quickly & safely with multiple options.</small>
+        </div>
+        <div class="benefit">
+          <i class="bi bi-shop text-danger"></i>
+          <h6 class="fw-bold">Easy Setup</h6>
+          <small>Add products in minutes & start selling today.</small>
+        </div>
+      </div>
+
+      <!-- Call to Action -->
+       {% if 'user_level' in session %}
+        {% if session['user_level']==1 %}
+          <a href="/add-product" class="btn btn-primary btn-lg cta-btn">➕ Add New Products</a>
+        {% endif %}
+      {% endif %}
+    </div>
+  </section>
+{% endblock %}

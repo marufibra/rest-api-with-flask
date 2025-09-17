@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profile</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f0f2f5;
+    }
+
+    /* Cover / background image */
+    .cover {
+       
+      width: 100%;
+      height: 250px;
+      background: url('../static/img/bg.jpg') no-repeat center center;
+      background-size: cover;
+      position: relative;
+     
+    }
+
+    
+    .cover .actions {            
+      position: absolute;        
+      top: 10px;                 
+      right: 10px;               
+      display: flex;             
+      gap: 10px;                 
+      z-index: 5;                
+    }
+    .cover .actions button {     
+      background: rgba(0,0,0,0.6);
+      border: none;
+      color: #fff;
+      padding: 8px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    /* Profile section */
+    .profile {
+      width: 80%;
+      margin: -80px auto 0 auto; /* pull up profile pic */
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      padding: 20px;
+      text-align: center;
+      position: relative;  
+      z-index: 1;          
+    }
+
+    /* Profile picture */
+    .profile img.avatar {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      border: 4px solid #fff;
+      margin-top: -100px;
+      background-color: #fff;
+      position: relative;
+    }
+
+    
+    .avatar-container {          
+      position: relative;
+      display: inline-block;
+    }
+    .avatar-container .actions { 
+      position: absolute;
+      bottom: 5px;
+      right: 5px;
+      display: flex;
+      gap: 5px;
+    }
+    .avatar-container .actions button { 
+      background: rgba(0,0,0,0.6);
+      border: none;
+      color: #fff;
+      padding: 6px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    
+    .profile h1 {
+      margin: 15px 0 5px;
+      font-size: 24px;
+    }
+    .profile h2 {
+      margin: 0;
+      font-size: 18px;
+      color: #555;
+    }
+
+    /* Contact info */
+    .info {
+      margin-top: 20px;
+      text-align: left;
+      display: inline-block;
+    }
+    .info p {
+      margin: 8px 0;
+      font-size: 16px;
+      color: #333;
+    }
+    .info span {
+      font-weight: bold;
+      margin-right: 8px;
+    }
+  </style>
+</head>
+<body>
+
+
+
+  
+
+  <!-- Cover Photo -->
+  <div class="cover">
+    
+    <div class="actions"> 
+      <button id="coverChangeBtn" type="button" title="Change Cover">✏️</button>  
+      <a href="/delete-img?type=bg&user-id={{ session['user_id'] }}"><button id="coverDeleteBtn" type="button" title="Delete Cover">🗑️</button></a>
+    </div>
+  </div>
+{% include "include/menu.html" %}
+  <!-- Profile Section -->
+  <div class="profile">
+   
+    <div class="avatar-container"> 
+      <img id="avatarImg" src="../static/img/profile.png" alt="Profile Picture" class="avatar">
+      <div class="actions">
+        
+        <button id="avatarChangeBtn" type="button" title="Change Profile">✏️</button> 
+        <a href="/delete-img?type=prof&user-id={{ session['user_id'] }}"><button id="avatarDeleteBtn" type="button" title="Delete Profile">🗑️</button></a>
+      </div>
+    </div>
+
+    <h1>{{ user_info.fname }} {{ user_info.lname }}</h1>
+    <h2>{{ session['email'] }}</h2>
+
+    <div class="info">
+      <p><span>First Name:</span> {{ user_info.fname }}</p>
+      <p><span>Last Name:</span> {{ user_info.lname }}</p>
+      <p><span>Phone:</span> {{ user_info.phone }}</p>
+      <p><span>Email:</span> {{ session['email'] }}</p>
+      <p><a href="/edit-profile"><button type="button">Edit Profile</button></a></p>
+    </div>
+  </div>
+
+  
+  <input id="coverInput" type="file" accept="image/*" hidden>   
+  <input id="avatarInput" type="file" accept="image/*" hidden>  
+
+</body>
+</html>

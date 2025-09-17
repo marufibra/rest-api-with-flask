@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %} {% endblock %}
+{% block head %}
+    <style>
+        .login-container{
+            height: 100vh;
+            
+        }
+        .form-control:focus{
+            box-shadow:none;
+            border-color:#6c7579;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+
+    <div class="container-fluid login-container">
+        {% include "include/menu.html" %}
+        <div class="row h-100">
+            <div class="col-md-6 d-flex align-items-center justify-content-center bg-light">
+                <div class="p-4 w7-75">
+                    
+                    <h3>Edit Profile</h3>
+                    <h3>{{ status }}</h3>
+                    
+                    <form action="/edit-profile" method="post">
+                        <div class="mb-3">
+                            <label for="fname">First Name</label>
+                            <input value="{{ user_info.fname }}" type="text" name="fname" id="fname" required class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label for="lname">Last Name</label>
+                            <input value="{{ user_info.lname }}" type="text" name="lname" id="lname" required class="form-control">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="phone">Phone</label>
+                            <input value="{{ user_info.phone }}" type="txt" name="phone" id="phone" required class="form-control">
+                        </div>
+                        
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-6 d-none d-md-block align-items-center  justify-content-center">
+                <img src="{{ url_for('static', filename='img/ecommerce.jpg') }}" class="img-fluid" alt="Logo">
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

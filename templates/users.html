@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+{% block title %}All Products Page {% endblock %}
+
+{% block head %}<style>
+    body, html { height: 100%; margin: 0; }
+    .sidebar { height: 100vh; border-left: 1px solid #dee2e6; padding: 20px; }
+    .sidebar a { padding: 12px; display: block; border-radius: 8px; color: #333; text-decoration: none; margin-bottom: 10px; }
+    .sidebar a.active, .sidebar a:hover { background: #0d6efd; color: #fff; }
+    .sidebar .add-product {
+      background: red; color: #fff; font-weight: bold;
+      border-radius: 50px; text-align: center;
+      width: 66%; margin: 20px auto 0;
+      display: block; padding: 10px;
+    }
+    .sidebar .add-product:hover { background: #0b5ed7; }
+    .product-card { border: none; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.08); transition: transform 0.3s; }
+    .product-card:hover { transform: translateY(-5px); }
+    .product-card img { height: 220px; object-fit: cover; transition: transform 0.3s; }
+    .product-card:hover img { transform: scale(1.05); }
+    .product-price { font-size: 1.4rem; font-weight: bold; color: #0d6efd; }
+  </style>
+{% endblock %}
+
+{% block content %}
+
+{% include "include/menu.html" %}
+
+
+<style>
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  text-align: left;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+th, td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #007BFF;
+  color: white;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+tr:hover {
+  background-color: #f1f1f1;
+}
+
+a {
+  color: #007BFF;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+.paginate a:hover{
+  text-decoration: underline;
+}
+.paginate a{
+  text-decoration: none;
+  border: 1px solid blue;
+  padding:5px;
+}
+</style>
+
+
+
+
+  <div style="margin-top:100px;">
+    
+     <h3 style="color:red">{{ message }}</h3>
+    <table>
+      <tr>
+        <th>SN</th><th>User ID</th><th>Name</th><th>Status</th><th>Level</th><th>Prof Img</th><th>Actions</th>
+      </tr>
+      
+        {% for user in users %}
+          <tr>
+            <td>{{ loop.index }}</td><td>{{ "{:04d}".format(user.user_id) }}</td><td>{{ user.fname }} {{ user.lname }}</td><td>
+              {% if user.is_active == True %}
+              <span style="color:green">Active</span>
+              {% elif user.is_active == False %}
+              <span style="color:red">Inactive</span>
+              {% endif %}
+
+            </td><td>
+              
+              {% if user.user_level == 1 %}
+              Admin 
+              {% elif user.user_level == 5 %}
+              Guest 
+              {% endif %}
+            </td><td><img width="50" src="../static/uploads/{{ user.prof_img }}" alt="{{ user.fname }}"></td><td><a href="/users?pid={{ user.id }}&action=del"> Del </a> 
+              {% if user.is_active == True %}
+                {% if user.user_level == 1 %}
+                  | <a href="/users?pid={{ user.id }}&action=guest"> Make Guest </a>
+                {% elif user.user_level == 5 %}
+                  | <a href="/users?pid={{ user.id }}&action=admin"> Make Admin </a>
+                {% endif %}
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+     
+    </table>
+    
+   
+    
+    <div style="text-align: center;">
+    {% for i in range(rows) %}
+       <span class="paginate" >
+        
+        {% if request.args.get("page","1") == (i+1) | string %}
+        {{ i + 1 }}
+        {% else %}
+        
+          <a href="/users?page={{ i + 1 }}">{{ i + 1 }}</a>
+        {% endif %}
+      </span>
+    {% endfor %}
+    : Total Records = {{ count_users }}
+    </div>
+  </div>
+{% endblock %}

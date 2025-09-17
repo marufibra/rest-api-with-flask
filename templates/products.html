@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Page</title>
+    <style>
+        .products-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 columns on desktop */
+  gap: 20px; /* space between items */
+  padding: 20px;
+  margin-top:60px;
+}
+
+.product-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 15px;
+  text-align: center;
+}
+
+.product-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+
+.product-card h3 {
+  font-size: 18px;
+  margin: 10px 0 5px;
+}
+
+.product-card p {
+  color: #555;
+  font-size: 16px;
+}
+
+/* Responsive for mobile */
+@media (max-width: 768px) {
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on mobile */
+  }
+}
+
+    </style>
+</head>
+<body>
+{% include "include/menu.html" %}
+
+<div class="products-grid">
+    {% for p in products %}
+  <div class="product-card">
+    <img src="../static/uploads/{{ p.img }}" alt="{{ p.product_name }}">
+    <h3>{{ p.product_name }}</h3>
+    <p>{{ p.price }}</p>
+  </div>
+  {% endfor %}
+</div>
+{{ count_products }} {{ rows }}
+</body>
+</html>

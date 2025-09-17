@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}Add Product Page {% endblock %}
+
+{% block head %}<style>
+    body, html {
+      height: 100%;
+      margin: 0;
+    }
+    .form-wrapper {
+      height: 100vh; /* full height */
+    }
+    .form-container {
+      width: 100%;
+      max-width: 500px;
+    }
+    .form-control:focus {
+      box-shadow: none;
+      border-color: #0d6efd;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+
+{% include "include/menu.html" %}
+
+
+
+  <div class="d-flex align-items-center justify-content-center form-wrapper bg-light">
+    <div class="form-container p-4 bg-white rounded">
+      <h3 class="text-center mb-4">{% if data %} Edit Prodct {% else %} Add Product {% endif%}</h3>
+      <form action="/add-product" method="post" enctype="multipart/form-data" >
+        <!-- Name -->
+        <div class="mb-3">
+          <label for="productName" class="form-label">Product Name</label>
+          <input type="text" class="form-control" {% if data %} value="{{ data.productname }}" {% endif%} name="productName" id="productName" placeholder="Enter product name" required>
+        </div>
+        <!-- Price -->
+        <div class="mb-3">
+          <label for="price" class="form-label">Price</label>
+          <input type="number" class="form-control" {% if data %} value="{{ data.price }}" {% endif%} name="price" id="price" placeholder="Enter price" required>
+        </div>
+        <!-- Description -->
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <textarea class="form-control" name="description" id="description" rows="3" placeholder="Enter product description">{% if data %} {{ data.description }} {% endif%}</textarea>
+        </div>
+        <!-- Upload Product Image -->
+        <div class="mb-3">
+          <label for="productImage" class="form-label">Upload Product Image</label>
+          <input class="form-control" type="file" name="productImage" id="productImage" accept="image/*" >
+        </div>
+       
+        <div class="mb-3">
+          <label for="stock" class="form-label">Stock</label>
+          <input type="number" class="form-control" {% if data %} value="{{ data.stock }}" {% endif%} name="stock" id="stock" placeholder="Enter stock quantity" required>
+        </div>
+        <!-- Add Product Button -->
+        <div class="d-grid">
+          
+          {% if data %}
+           <button type="submit" name="button" value="{{ pid }}" class="btn btn-primary">Save Edited Product</button> 
+           {% else %}
+           <button type="submit" name="button" value="insert" class="btn btn-primary">Add Product</button> 
+           {% endif%}
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}

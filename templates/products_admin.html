@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block title %}All Products Page {% endblock %}
+
+{% block head %}<style>
+    body, html { height: 100%; margin: 0; }
+    .sidebar { height: 100vh; border-left: 1px solid #dee2e6; padding: 20px; }
+    .sidebar a { padding: 12px; display: block; border-radius: 8px; color: #333; text-decoration: none; margin-bottom: 10px; }
+    .sidebar a.active, .sidebar a:hover { background: #0d6efd; color: #fff; }
+    .sidebar .add-product {
+      background: red; color: #fff; font-weight: bold;
+      border-radius: 50px; text-align: center;
+      width: 66%; margin: 20px auto 0;
+      display: block; padding: 10px;
+    }
+    .sidebar .add-product:hover { background: #0b5ed7; }
+    .product-card { border: none; border-radius: 15px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.08); transition: transform 0.3s; }
+    .product-card:hover { transform: translateY(-5px); }
+    .product-card img { height: 220px; object-fit: cover; transition: transform 0.3s; }
+    .product-card:hover img { transform: scale(1.05); }
+    .product-price { font-size: 1.4rem; font-weight: bold; color: #0d6efd; }
+  </style>
+{% endblock %}
+
+{% block content %}
+
+{% include "include/menu.html" %}
+
+
+<style>
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  text-align: left;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+th, td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #007BFF;
+  color: white;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+tr:hover {
+  background-color: #f1f1f1;
+}
+
+a {
+  color: #007BFF;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+</style>
+
+
+
+
+  <div style="margin-top:100px;">
+    <a href="/add-product"><button type="button">Add Product</button></a>
+     <h3 style="color:red">{{ message }}</h3>
+    <table>
+      <tr>
+        <th>SN</th><th>Product Name</th><th>Descripton</th><th>Price</th><th>Stock</th><th>img</th><th>User</th><th>Action</th>
+      </tr>
+      
+        {% for p in products %}
+          <tr>
+            <td>{{ loop.index }}</td><td>{{ p.product_name }}</td><td>{{ p.description }}</td><td>{{ p.price }}</td><td>{{ p.stock }}</td><td><img width="50" src="../static/uploads/{{ p.img }}" alt="{{ p.product_name }}"></td><td>{{ p.fname }} {{ p.fname }}</td><td><a href="/products?pid={{ p.product_id }}&action=del"> Del </a> | <a href="/add-product?pid={{ p.product_id }}&action=edit"> Edit </a></td>
+          </tr>
+        {% endfor %}
+     
+    </table>
+    
+  </div>
+{% endblock %}
